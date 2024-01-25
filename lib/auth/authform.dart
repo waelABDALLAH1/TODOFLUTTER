@@ -19,7 +19,24 @@ class _AuthFormState extends State<AuthForm> {
 
 
 
+  void startAuthentication() async {
 
+    final formState = _formKey.currentState;
+    if (formState != null) {
+      final validity = formState.validate();
+      FocusScope.of(context).unfocus();
+      if (validity) {
+        _formkey.currentState.save();
+        submitform();
+      }
+    }
+    submitform(String email , String password , String username )async{
+      final auth =FirebaseAuth.instance;*
+      try {
+        if (isLoginPage)
+      }
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
