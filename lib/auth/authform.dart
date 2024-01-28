@@ -113,7 +113,8 @@ class _AuthFormState extends State<AuthForm> {
                       height: 10,
                     ),
                     TextFormField(
-                      keyboardType: TextInputType.emailAddress,
+                      obscureText: true ,
+                      keyboardType: TextInputType.visiblePassword,
                       key: ValueKey('password'),
                       validator: (value) {
                         if (value?.isEmpty ?? true) {
@@ -141,7 +142,9 @@ class _AuthFormState extends State<AuthForm> {
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 primary: Theme.of(context).primaryColor),
-                            onPressed: () {},
+                            onPressed: () {
+                              startAuthentication();
+                            },
                             child: isLoginPage
                                 ? Text(
                                     "Login",
