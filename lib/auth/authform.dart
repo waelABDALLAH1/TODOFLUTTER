@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,22 +22,36 @@ class _AuthFormState extends State<AuthForm> {
 
   void startAuthentication() async {
 
-    final formState = _formKey.currentState;
+    final formState = _formkey.currentState;
     if (formState != null) {
       final validity = formState.validate();
       FocusScope.of(context).unfocus();
       if (validity) {
-        _formkey.currentState.save();
-        submitform();
-      }
-    }
-    submitform(String email , String password , String username )async{
-      final auth =FirebaseAuth.instance;*
-      try {
-        if (isLoginPage)
+        formState.save(); // Use formState consistently
+        submitForm(_email, _password, _username);
       }
     }
   }
+
+  Future<void> submitForm(String email, String password, String username) async {
+    final auth = FirebaseAuth.instance;
+    UserCredential? authResult; // Use UserCredential? to handle potential null
+    try {
+      if (isLoginPage) {
+        authResult = await auth.signInWithEmailAndPassword(email: email, password: password);
+      } else {
+        authResult = await auth.createUserWithEmailAndPassword(email: email, password: password);
+        String uid = authResult.user?.uid ?? ''; // Use null-aware operator
+        await FirebaseFirestore.instance.collection('users').doc(uid).set({
+          'username': username,
+          'email': email,
+        });
+      }
+    } catch (err) {
+      print(err);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
