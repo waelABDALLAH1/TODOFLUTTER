@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:todo/auth/authscreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:todo/screens/add_task.dart';
+import 'package:todo/screens/description.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -84,7 +85,9 @@ class _HomeState extends State<Home> {
                   var time = (docs[index]['timestamp'] as Timestamp)
                       .toDate();
                   return InkWell(
-                    onTap: (){},
+                    onTap: (){
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=>Description(title: docs[index]['title'], description: docs[index]['description'])));
+                    },
                     child: Container(
                       margin: EdgeInsets.all(10),
                       decoration: BoxDecoration(
