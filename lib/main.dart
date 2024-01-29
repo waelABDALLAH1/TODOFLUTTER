@@ -4,6 +4,7 @@ import 'package:todo/auth/authscreen.dart';
 import 'package:todo/screens/Home.dart';
 import 'package:todo/auth/authscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'screens/splashscreen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -17,14 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: StreamBuilder(stream : FirebaseAuth.instance.authStateChanges(), builder: (context, userssnapshot){
-        if (userssnapshot.hasData){
-          return Home();
-        }
-        else {
-          return AuthScreen();
-        }
-      }),
+      home: MySplash(),
       debugShowCheckedModeBanner: false,
       theme:
           ThemeData(brightness: Brightness.dark,primaryColor: Colors.blueAccent,
