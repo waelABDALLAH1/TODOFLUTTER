@@ -105,7 +105,7 @@ class _AddTaskState extends State<AddTask> {
                 ),
                 onPressed: () {
                   addTaskToFirebase();
-                  Navigator.push(context, MaterialPageRoute(builder: (context) =>Home()));
+                  Navigator.pop(context);
                 },
                 child: Text(
                   'Add Task',
