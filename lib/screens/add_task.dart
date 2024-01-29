@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:toast/toast.dart';
+import 'package:todo/screens/Home.dart';
 
 void showCustomToast(BuildContext context, String message) {
   final snackBar = SnackBar(
@@ -96,6 +97,7 @@ class _AddTaskState extends State<AddTask> {
                     (Set<MaterialState> states) {
                       if (states.contains(MaterialState.pressed)) {
                         return Colors.blueAccent.shade100;
+
                       }
                       return Theme.of(context).primaryColor;
                     },
@@ -103,6 +105,7 @@ class _AddTaskState extends State<AddTask> {
                 ),
                 onPressed: () {
                   addTaskToFirebase();
+                  Navigator.push(context, MaterialPageRoute(builder: (context) =>Home()));
                 },
                 child: Text(
                   'Add Task',

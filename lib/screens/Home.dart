@@ -17,15 +17,6 @@ class Home extends StatefulWidget {
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
-void _signOut() async {
-  try {
-    await _auth.signOut();
-    print('User signed out');
-  } catch (e) {
-    print('Error signing out: $e');
-  }
-}
-
 class _HomeState extends State<Home> {
   String uid = '';
 
@@ -54,17 +45,23 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         title: Center(child: Text('TODO')),
+        actions: [
+          IconButton(
+              onPressed: () async {
+                try {
+                  await _auth.signOut();
+                  print('User signed out');
+                } catch (e) {
+                  print('Error signing out: $e');
+                }
+              },
+              icon: Icon(Icons.logout))
+        ],
         backgroundColor: Colors.green[300],
       ),
       body: Container(
-        height: MediaQuery
-            .of(context)
-            .size
-            .height,
-        width: MediaQuery
-            .of(context)
-            .size
-            .width,
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
         child: StreamBuilder(
           stream: FirebaseFirestore.instance
               .collection('tasks')
@@ -82,11 +79,15 @@ class _HomeState extends State<Home> {
               return ListView.builder(
                 itemCount: docs.length,
                 itemBuilder: (context, index) {
-                  var time = (docs[index]['timestamp'] as Timestamp)
-                      .toDate();
+                  var time = (docs[index]['timestamp'] as Timestamp).toDate();
                   return InkWell(
-                    onTap: (){
-                      Navigator.push(context,MaterialPageRoute(builder: (context)=>Description(title: docs[index]['title'], description: docs[index]['description'])));
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Description(
+                                  title: docs[index]['title'],
+                                  description: docs[index]['description'])));
                     },
                     child: Container(
                       margin: EdgeInsets.all(10),
@@ -108,10 +109,13 @@ class _HomeState extends State<Home> {
                                     docs[index]['title'],
                                     style: GoogleFonts.roboto(fontSize: 20),
                                   )),
-                              SizedBox(height: 5,),
+                              SizedBox(
+                                height: 5,
+                              ),
                               Container(
                                 margin: EdgeInsets.only(left: 20),
-                                child: Text(DateFormat.yMd().add_jm().format(time)),
+                                child: Text(
+                                    DateFormat.yMd().add_jm().format(time)),
                               )
                             ],
                           ),
@@ -144,9 +148,7 @@ class _HomeState extends State<Home> {
             Icons.add,
             color: Colors.white,
           ),
-          backgroundColor: Theme
-              .of(context)
-              .primaryColor,
+          backgroundColor: Theme.of(context).primaryColor,
           onPressed: () {
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => AddTask()));

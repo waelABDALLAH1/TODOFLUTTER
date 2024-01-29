@@ -59,6 +59,9 @@ class _AuthFormState extends State<AuthForm> {
       width: MediaQuery.of(context).size.width,
       child: ListView(
         children: [
+          Container(height: 200,
+              margin: EdgeInsets.all(30),
+              child: Image.asset('assets/images.jpeg'),),
           Container(
               padding: EdgeInsets.only(left: 10, right: 10, top: 10),
               child: Form(
