@@ -1,1 +1,1 @@
-This is a todolist app
+This is a todolist app created with flutter and firebase
